@@ -1,3 +1,4 @@
+/// <reference types="vite/client" />
 import { ContractConfig } from "@wagmi/cli";
 import { AppKitNetwork } from "@reown/appkit/networks";
 import {
@@ -32,7 +33,7 @@ import {
 } from "./contract-addresses";
 import { defineChain } from "viem";
 
-const baseSepoliaChain = /*#__PURE__*/ defineChain({
+const osTestnetChain = /*#__PURE__*/ defineChain({
     id: 531050204,
     network: "sophon-os-testnet",
     name: "SophonOSTestnet",
@@ -59,8 +60,38 @@ const baseSepoliaChain = /*#__PURE__*/ defineChain({
     },
 });
 
+// TODO: Update to real mainnet chain
+const osMainnetChain = /*#__PURE__*/ defineChain({
+    id: 50204,
+    network: "sophon-os-mainnet",
+    name: "SophonOSMainnet",
+    nativeCurrency: { name: "SOPH", symbol: "SOPH", decimals: 18 },
+    rpcUrls: {
+        default: {
+            http: ["https://zksync-os-testnet-sophon.zksync.dev"],
+        },
+        public: {
+            http: ["https://zksync-os-testnet-sophon.zksync.dev"],
+        },
+    },
+    blockExplorers: {
+        default: {
+            name: "SophonOSMainnet",
+            url: "https://block-explorer.zksync-os-testnet-sophon.zksync.dev",
+        },
+    },
+    contracts: {
+        multicall3: {
+            address: "0xca11bde05977b3631167028862be2a173976ca11",
+            blockCreated: 1468,
+        },
+    },
+});
+
+const envChain = import.meta.env.VITE_CHAIN === "testnet" ? osTestnetChain : osMainnetChain;
+
 /* configure supported networks here */
-export const wagmiNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [baseSepoliaChain];
+export const wagmiNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [envChain];
 
 const rawContracts = [
     { name: "AlgebraFactory", abi: algebraFactoryABI },
