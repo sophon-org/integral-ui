@@ -1,6 +1,5 @@
 import { NONFUNGIBLE_POSITION_MANAGER } from "config";
 import { useReadNonfungiblePositionManagerTokenUri } from "@/generated";
-import { ChainId } from "@cryptoalgebra/custom-pools-sdk";
 import { ExternalLinkIcon } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { useChainId } from "wagmi";
@@ -20,7 +19,8 @@ const PositionNFT = ({ positionId }: PositionNFTProps) => {
 
     const json = uri && JSON.parse(atob(uri.slice("data:application/json;base64,".length)));
 
-    const openSeaLink = `https://${chainId === ChainId.BaseSepolia ? "testnets." : ""}opensea.io/assets/base/${
+    // TODO: change to sophon-os-testnet
+    const openSeaLink = `https://opensea.io/assets/base/${
         NONFUNGIBLE_POSITION_MANAGER[chainId]
     }/${positionId}`;
 
