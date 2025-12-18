@@ -88,9 +88,7 @@ const osMainnetChain = /*#__PURE__*/ defineChain({
     },
 });
 
-const chainEnv = typeof import.meta !== "undefined" && import.meta.env
-    ? import.meta.env.VITE_CHAIN
-    : process.env.VITE_CHAIN;
+const chainEnv = process.env.VITE_CHAIN;
 const envChain = chainEnv === "testnet" ? osTestnetChain : osMainnetChain;
 
 /* configure supported networks here */
