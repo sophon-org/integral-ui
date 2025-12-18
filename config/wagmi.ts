@@ -88,7 +88,10 @@ const osMainnetChain = /*#__PURE__*/ defineChain({
     },
 });
 
-const envChain = import.meta.env.VITE_CHAIN === "testnet" ? osTestnetChain : osMainnetChain;
+const chainEnv = typeof import.meta !== "undefined" && import.meta.env
+    ? import.meta.env.VITE_CHAIN
+    : process.env.VITE_CHAIN;
+const envChain = chainEnv === "testnet" ? osTestnetChain : osMainnetChain;
 
 /* configure supported networks here */
 export const wagmiNetworks: [AppKitNetwork, ...AppKitNetwork[]] = [envChain];
